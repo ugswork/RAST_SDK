@@ -1,5 +1,6 @@
 package RAST_SDK::RAST_SDKImpl;
 use strict;
+use Data::Dumper;
 use Bio::KBase::Exceptions;
 # Use Semantic Versioning (2.0.0-rc.1)
 # http://semver.org 
@@ -154,7 +155,8 @@ sub util_get_contigs {
 }
 
 sub annotate {
-	my ($self,$parameters) = @_;	
+	print("In AAAANNNNNNNNOTTTTTATTTE  ========================================================\n");
+	my ($self,$parameters) = @_;
 	my $oldfunchash = {};
 	#Creating default genome object
 	my $inputgenome = {
@@ -226,8 +228,11 @@ sub annotate {
 		    $message = "The RAST algorithm was applied to functionally annotate ".@{$inputgenome->{features}}." features in an existing genome: ".$parameters->{scientific_name}.".";
 		}
 	}
-	
+
+	print("In AAAANNNNNNNNOTTTTTATTTE  =============================1111111111111===========================\n");
+	system("ls -lR /data");
   	my $gaserv = Bio::KBase::GenomeAnnotation::GenomeAnnotationImpl->new();
+  	print("In AAAANNNNNNNNOTTTTTATTTE  =============================11111222222211111111===========================\n");
   	my $workflow = {stages => []};
 	my $extragenecalls = "";
 	if (defined($parameters->{call_features_rRNA_SEED}) && $parameters->{call_features_rRNA_SEED} == 1)	{
@@ -398,6 +403,9 @@ sub annotate {
 #			Bio::KBase::utilities::error("Cannot call genes on genome with no contigs!");
 #		}
 #	}
+
+    print("In AAAANNNNNNNNOTTTTTATTTE  =============222222222222222222===========================================");
+
 	my $v1flag = 0;
 	my $simflag = 0;
 	my $annomessage = "";
@@ -511,6 +519,8 @@ sub annotate {
 			}
 		}
 	}
+
+	print("In AAAANNNNNNNNOTTTTTATTTE  ======================333333333333333==================================\n");
 	# Runs, the annotation, comment out if you dont have the reference files
 	$genome = $gaserv->run_pipeline($inputgenome, $workflow);
 
@@ -780,6 +790,9 @@ sub annotate {
 		append => 0,
 		html => 1
 	});
+	print "2222222222222222222222222222222";
+    print Data::Dumper->Dump($gaout);
+
 	return {"ref" => $gaout->{info}->[6]."/".$gaout->{info}->[0]."/".$gaout->{info}->[4]};
 }
 #END_HEADER
